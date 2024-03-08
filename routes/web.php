@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\ChambreController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,9 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+//chambre
+Route::resource('chambres', ChambreController::class);
+//chambre
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -44,6 +49,7 @@ Route::get('/navbar',function(){
     return Inertia::render('MyPages/Navabar');
 })->name('MyPages.Navbar');
 
+Route::get('/users', [RegisteredUserController::class, 'index']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

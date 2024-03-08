@@ -19,13 +19,25 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'cin',
         'email',
         'date_naissance',
         'numero_telephone',
         'nationalite',
         'password',
+        'role',
         
     ];
+    public function reservations(){
+        return $this->hasMany(Reservation::class,'id_user');
+    }
+    public function comments(){
+        return $this->hasMany(Comment::class,'id_user');
+    }
+    public function invites(){
+        return $this->hasMany(Invite::class,'id_user');
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

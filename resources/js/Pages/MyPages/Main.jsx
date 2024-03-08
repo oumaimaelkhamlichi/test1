@@ -10,7 +10,7 @@ export default function Main(){
       
         return (
           <div>
-         <Navbar/>
+         {/* <Navbar/> */}
            
           </div>
         );

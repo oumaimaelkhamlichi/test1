@@ -26,7 +26,6 @@ return new class extends Migration
             $table->integer('numero_chambre')->unsigned(); // Chambre number as foreign key
             $table->foreignId('id_chambre')->constrained('chambres');
             $table->foreignId('id_user')->constrained('users');
-           
             $table->timestamps();
         });
     }

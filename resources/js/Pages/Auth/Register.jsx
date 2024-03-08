@@ -6,14 +6,17 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Register() {
+export default function Register(props) {
+       console.log(props.users);
   const { data, setData, post, processing, errors, reset } = useForm({
     name: '',
+    cin: '',
     numero_telephone: '',
     date_naissance: '',
     nationalite: '',
     email: '',
     password: '',
+    role: '',
     password_confirmation: '',
   });
 
@@ -30,7 +33,7 @@ export default function Register() {
     );
   };
 
-  const submit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     post(route('register'));
   };
@@ -39,7 +42,7 @@ export default function Register() {
     <GuestLayout>
       <Head title="Register" />
 
-      <form className="flex bg-gray-100 rounded-lg p-8 space-y-6 w-3/4 mx-auto">
+      <form  onSubmit={handleSubmit} className="flex">
         <div className="w-full">
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">Register</h2>
 
@@ -53,6 +56,17 @@ export default function Register() {
               required
             />
             <InputError message={errors.name} className="mt-2 text-red-500" />
+          </div>
+          <div className="mb-4">
+            <InputLabel htmlFor="cin" value="cin" />
+            <TextInput
+              id="cin"
+              name="cin"
+              value={data.cin}
+              onChange={handleOnChange}
+              required
+            />
+            <InputError message={errors.cin} className="mt-2 text-red-500" />
           </div>
 
           <div className="mb-4">
@@ -80,7 +94,7 @@ export default function Register() {
             <InputError message={errors.date_naissance} className="mt-2 text-red-500" />
           </div>
 
-          <div className="mb-4">
+          <div className="">
             <InputLabel htmlFor="nationalite" value="Nationality" />
             <TextInput
               id="nationalite"
