@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('date_fin')->nullable();
             $table->string('statu',100);
             $table->integer('etoile');
-            $table->date('date-reservation');
+            $table->date('date_reservation');
             $table->integer('nbr_personne');
             $table->integer('nbr_children')->limit(6)->nullable();
             $table->integer('nbr_nuit');

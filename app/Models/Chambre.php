@@ -9,7 +9,7 @@ class Chambre extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'numero', 'nom_chambre', 'prix_chambre', 'description_chambre', 'image1','image2','image3','image4', 'disponible', 'typeChambre'
+        'numero', 'nom_chambre', 'prix_chambre', 'description_chambre', 'image1','image2','image3','image4', 'disponible', 'typeChambre, nbr_per'
     ];
     public function reservations()
     {

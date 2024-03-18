@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chambre;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use SebastianBergmann\Environment\Console;
 
 class ChambreController extends Controller
 {
@@ -29,8 +30,9 @@ class ChambreController extends Controller
     //  $table->timestamps();
     public function index()
     {
+       
         $chambres = Chambre::all();
-        return Inertia::render('PagesAdmin/chambres/index', ['chambres' => $chambres]);
+         return inertia('PagesAdmin/chambres/index', ['chambres' => $chambres]);
     }
 
     /**
@@ -51,38 +53,60 @@ class ChambreController extends Controller
      */
     public function store(Request $request)
     {
-       
         $request->validate([
             'numero' => 'required|string|max:255',
             'nom_chambre' => 'required|string',
-            'prix_chambre' => 'required|integer|max:255',
-            'description_chambre' => 'required|string',
-            'image1' => 'required|image|max:2048',
+            'prix_chambre' => 'required|integer',
+            'description_chambre' => 'required|string|max:2000',
+            'image1' => 'required',
             'disponible' => 'nullable|boolean',
-        'typeChambre' => 'nullable|in:standard,double,twin,luxe,familaile,executive,avecVue',
-           
+            'typeChambre' => 'nullable|in:standard,double,twin,luxe,familaile,executive,avecVue',
         ]);
-        
+        // $image = base64_encode(file_get_contents($request->file('image1')));
+        if ($request->hasFile('image1')) {
+            $file1 = $request->file('image1')->getClientOriginalName();
+            $file_name1 = time() . '.' . $file1;
+            $path = 'public/images';
+            $request->file('image1')->move($path, $file_name1);
+        }
+        if ($request->hasFile('image2')) {
+            $file2 = $request->file('image2')->getClientOriginalName();
+            $file_name2 = time() . '.' . $file2;
+            $path = 'public/images';
+            $request->file('image2')->move($path, $file_name2);
+        }
+        if ($request->hasFile('image3')) {
+            $file3 = $request->file('image3')->getClientOriginalName();
+            $file_name3 = time() . '.' . $file3;
+            $path = 'public/images';
+            $request->file('image3')->move($path, $file_name3);
+        }
+        if ($request->hasFile('image4')) {
+            $file4 = $request->file('image4')->getClientOriginalName();
+            $file_name4 = time() . '.' . $file4;
+            $path = 'public/images';
+            $request->file('image4')->move($path, $file_name4);
+        }
+    
         $chambre = new Chambre();
-    $chambre->numero = $request->numero;
-    $chambre->nom_chambre = $request->nom_chambre;
-    $chambre->prix_chambre = $request->prix_chambre;
-    $chambre->description_chambre = $request->description_chambre;
-    $chambre->disponible = $request->disponible ?? true;
-    $chambre->typeChambre = $request->typeChambre ?? 'standard';
+        $chambre->numero = $request->numero;
+        $chambre->numero = $request->numero;
+        $chambre->nom_chambre = $request->nom_chambre;
+        $chambre->prix_chambre = $request->prix_chambre;
+        $chambre->nbr_per = $request->nbr_per;
+        $chambre->description_chambre = $request->description_chambre;
+        $chambre->disponible = $request->disponible ?? true;
+        $chambre->typeChambre = $request->typeChambre ?? 'standard';
+        $chambre->image1 = $file1  ?? '';
+        $chambre->image2 = $file2  ?? '';
+        $chambre->image3 = $file3  ?? '';
+        $chambre->image4 = $file4  ?? '';
 
-    // Enregistrement de l'image
-    if ($request->hasFile('image1')) {
-        $imagePath = $request->file('image1')->store('chambre_images', 'public');
-        $chambre->image1 = $imagePath;
+    
+        $chambre->save();
+        return redirect()->route('chambres.index');
     }
-
-    $chambre->save();
-
-    return redirect()->route('PagesAdmin.chambres.index');
-    }
-
-    /**
+    /**9999999999999999999999999999999999999999
      * Display the specified resource.
      *
      * @param  int  $id

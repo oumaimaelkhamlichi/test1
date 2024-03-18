@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ChambreController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -18,16 +20,30 @@ use Inertia\Inertia;
 |
 */
 
+// Route::get('/', function () {
+//     return Inertia::render('MyPages/Navabar', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
 Route::get('/', function () {
-    return Inertia::render('MyPages/Navabar', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Auth/Login');
 });
+
+
+
+
+
+
+
+
+
+
 //chambre
-Route::resource('chambres', ChambreController::class);
+Route::resource('chambres', 'App\Http\Controllers\ChambreController');
+Route::resource('reservation', 'App\Http\Controllers\ReservationController');
 //chambre
 
 Route::get('/dashboard', function () {

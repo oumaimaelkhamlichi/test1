@@ -1,11 +1,22 @@
 import React from 'react';
 import { Link } from '@inertiajs/inertia-react';
 
-const Index = ({ chambres }) => {
-  return (
-    <div>
-      <h1>Liste des chambres</h1>
+export default function AfficherChambres({ chambres }) {
+  console.log(chambres);
+  
+  if (chambres.length === 0) {
+    return (
+      <div className="mt-40 ml-20">
+        <h1>Liste des chambres</h1>
+        <p>Aucune chambre n'est disponible pour le moment.</p>
+      </div>
+    );
+  }
 
+  return (
+    <div className="mt-40 ml-20">
+      <h1>Liste des chambres</h1>
+       
       <table>
         <thead>
           <tr>
@@ -29,9 +40,7 @@ const Index = ({ chambres }) => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> 
     </div>
   );
-};
-
-export default Index;
+}

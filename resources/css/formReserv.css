@@ -1,0 +1,46 @@
+/* formReserv.css */
+
+.inputRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.inputContainer {
+  flex-basis: 48%;
+}
+
+.textInput {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.inputLabel {
+  display: block;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+.errorText {
+  font-size: 0.75rem;
+  color: #ff0000;
+  margin-top: 0.25rem;
+}
+
+.submitButton {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: #4c51bf;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #434190;
+}
