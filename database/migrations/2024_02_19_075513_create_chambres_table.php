@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('chambres', function (Blueprint $table) {
             $table->id();
-            $table->integer('numero');
+            $table->string('numero');
             $table->integer('nbr_per');
             $table->string('nom_chambre',100);           
             $table->integer('prix_chambre');
@@ -26,7 +26,8 @@ return new class extends Migration
             $table->string('image4')->nullable();
         
             $table->boolean('disponible')->default(true);
-            $table->enum('typeChambre', ['standard', 'double','twin', 'luxe','familaile','executive','avecVue'])->default('standard');
+            $table->foreignId('type_chambre_id')->constrained('type_chambres')->onDelete('cascade');
+            // $table->enum('typeChambre', ['standard', 'double','twin', 'luxe','familaile','executive','avecVue'])->default('standard');
             $table->timestamps();
         });
     }

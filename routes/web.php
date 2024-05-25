@@ -1,11 +1,20 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ChambreController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ChambreServiceController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashbordController;
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\TypeChambreController;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -29,30 +38,52 @@ use Inertia\Inertia;
 //     ]);
 // });
 Route::get('/', function () {
-    return Inertia::render('Auth/Login');
+    return Inertia::render('Auth/Login', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
 });
-
-
-
-
-
-
-
-
-
-
+// Route::get('/', function () {
+//     return Inertia::render('Auth/Login');
+// });
+Route::get('/Liens',function(){
+    return  Inertia::render('MyPages/Liens');
+});
 //chambre
-Route::resource('chambres', 'App\Http\Controllers\ChambreController');
+ Route::resource('chambres', 'App\Http\Controllers\ChambreController');
+ Route::resource('services', 'App\Http\Controllers\ServiceController');
 Route::resource('reservation', 'App\Http\Controllers\ReservationController');
-//chambre
+Route::resource('serchambre', 'App\Http\Controllers\ChambreServiceController');
+Route::resource('typechambres', TypeChambreController::class);
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
-// ->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/home',function(){
+
+// Route::resource('dashbord', 'App\Http\Controllers\DashbordController')->middleware(['auth', 'verified']);
+
+// Route::get('/dashbord', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+//chambre
+//Clients
+Route::get('/page', function () {
+    return Inertia::render('PagesClient/Accueil');
+});
+//Clients
+
+
+Route::put('/reservations/cancel/{id}', [ReservationController::class, 'cancel']);
+
+// Route::get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Route::get('/dashbord', function () {
+//     return Inertia::render('Dashboard');
+// })->name('dashboard');
+Route::get('/wel',function(){
     return Inertia::render('MyPages/Home');
-})->name('MyPages.Home');
+})->name('MyPages.wel')->middleware(['auth', 'verified']);;
 Route::get('/main',function(){
     return Inertia::render('MyPages/Main');
 });
@@ -61,16 +92,67 @@ Route::get('/contact',function(){
     return Inertia::render('MyPages/Contact');
 })->name('MyPages.Contact');
 
-Route::get('/navbar',function(){
-    return Inertia::render('MyPages/Navabar');
-})->name('MyPages.Navbar');
+Route::get('afficher', [ServiceController::class, 'afficher'])->name('services.afficher');
+// nouveau
+Route::get('create1', [ReservationController::class, 'create1'])->name('reservation.create1');
+Route::get('store1', [ReservationController::class, 'store1'])->name('reservation.store1');
 
-Route::get('/users', [RegisteredUserController::class, 'index']);
 
+// nouveau
+Route::get('/Register',function(){
+    return Inertia::render('Auth/register');
+});
+
+Route::resource('users', RegisteredUserController::class);
+// Route::get('/users', [RegisteredUserController::class, 'index']);
+// Route::postz('logout', 'Auth\AuthenticatedSessionController@destroy');
 Route::middleware('auth')->group(function () {
+  
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::get('auth/google', [GoogleController::class, 'redirect'])->name('google-auth');
+Route::get('auth/google/call-back', [GoogleController::class, 'callbackGoogle']);
+// client routes
+Route::get('/recherchetypechambre', [TypeChambreController::class, 'search'])->name('recherche.index2');
+// middleware 
+Route::get('/translations', [TypeChambreController::class, 'getTranslations']);
+// Route::middleware(['role:admin'])->group(function () {
+    // Route::get('/', function () {
+    //     return Inertia::render('Auth/Login', [
+    //         'canLogin' => Route::has('login'),
+    //         'canRegister' => Route::has('register'),
+    //         'laravelVersion' => Application::VERSION,
+    //         'phpVersion' => PHP_VERSION,
+    //     ]);
+    // });
+    // Route::get('/admin', [AdminController::class, 'index'])->name('admin.home');
+//     Route::resource('chambres', 'App\Http\Controllers\ChambreController');
+//  Route::resource('service', 'App\Http\Controllers\ServiceController');
+// Route::resource('reservation', 'App\Http\Controllers\ReservationController');
+// Route::resource('serchambre', 'App\Http\Controllers\ChambreServiceController');
+Route::resource('typechambre', TypeChambreController::class);
+Route::resource('dashbord', 'App\Http\Controllers\DashbordController')->middleware(['auth', 'verified']);
+// });
+// hii
+// Route::get('/', function () {
+//     $user = Auth::user();
+//     if ($user->role == 'admin') {
+//         return redirect()->intended(RouteServiceProvider::HOME);
+//     } else {
+//         return redirect()->route('MyPages.Home');
+//     }
+// });
+Route::get('recherchetypechambre/image/{image}', [TypeChambreController::class, 'getImage'])->name('tchambre.image');
+Route::get('/typechambre/index2', [TypeChambreController::class, 'index2'])->name('typechambre.index2');
+Route::get('/home', function () {
+    $user = Auth::user();
+    if ($user->role == 'admin') {
+        return redirect()->intended(RouteServiceProvider::HOME);
+    } else {
+        return redirect()->route('MyPages.wel');
+    }
+})->name('home');
 
 require __DIR__.'/auth.php';

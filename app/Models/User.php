@@ -26,6 +26,12 @@ class User extends Authenticatable
         'nationalite',
         'password',
         'role',
+        'google_id',
+        'adresse',
+        'ville',
+        'pays',
+        'nombre_enfants',
+        'etat_civil'
         
     ];
     public function reservations(){

@@ -1,0 +1,146 @@
+/* Global Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f4f8;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.index-container {
+  padding: 20px;
+  max-width: 1200px;
+  /* margin: auto; */
+  margin-left: 300px;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+/* Buttons */
+button, .btn-primary {
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+button.bg-blue-500 {
+  background-color: #3498db;
+}
+
+button.bg-blue-500:hover {
+  background-color: #2980b9;
+}
+
+button.bg-green-500 {
+  background-color: #2ecc71;
+}
+
+button.bg-green-500:hover {
+  background-color: #27ae60;
+}
+
+button.bg-gray-500 {
+  background-color: #95a5a6;
+}
+
+button.bg-gray-500:hover {
+  background-color: #7f8c8d;
+}
+
+button.bg-red-500 {
+  background-color: #e74c3c;
+}
+
+button.bg-red-500:hover {
+  background-color: #c0392b;
+}
+
+button.bg-red-700 {
+  background-color: #c0392b;
+}
+
+button.bg-red-700:hover {
+  background-color: #a93226;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filters input {
+  padding: 10px;
+  font-size: 16px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Table */
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f7f7f7;
+  color: #333;
+}
+
+td {
+  color: #555;
+}
+
+td button, td a {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/* Client Info Tooltip */
+.client-info-tooltip {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 2px;
+  left: 90%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.client-info-tooltip p {
+  margin: 10px 0;
+}
+
+.client-info-tooltip img {
+  display: block;
+  margin: 0 auto 10px;
+  width: 50px;
+  height: 50px;
+}

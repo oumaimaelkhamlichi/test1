@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chambre;
+use App\Models\TypeChambre;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use SebastianBergmann\Environment\Console;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class ChambreController extends Controller
 {
@@ -30,9 +34,9 @@ class ChambreController extends Controller
     //  $table->timestamps();
     public function index()
     {
-       
+        $Type=TypeChambre::all();
         $chambres = Chambre::all();
-         return inertia('PagesAdmin/chambres/index', ['chambres' => $chambres]);
+         return inertia::render('PagesAdmin/Chambres/index', ['chambres' => $chambres,'types'=>$Type]);
     }
 
     /**
@@ -42,7 +46,9 @@ class ChambreController extends Controller
      */
     public function create()
     {
-        return Inertia::render('PagesAdmin/chambres/create');
+        $typechambres = TypeChambre::all();
+         return Inertia::render('PagesAdmin/Chambres/create', ['typechambres' => $typechambres]);
+       
     }
 
     /**
@@ -54,13 +60,13 @@ class ChambreController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'numero' => 'required|string|max:255',
+            // 'numero' => 'required|max:255',
             'nom_chambre' => 'required|string',
             'prix_chambre' => 'required|integer',
             'description_chambre' => 'required|string|max:2000',
             'image1' => 'required',
             'disponible' => 'nullable|boolean',
-            'typeChambre' => 'nullable|in:standard,double,twin,luxe,familaile,executive,avecVue',
+            // 'type_chambre_id' => 'nullable|in:standard,double,twin,luxe,familaile,executive,avecVue',
         ]);
         // $image = base64_encode(file_get_contents($request->file('image1')));
         if ($request->hasFile('image1')) {
@@ -90,18 +96,28 @@ class ChambreController extends Controller
     
         $chambre = new Chambre();
         $chambre->numero = $request->numero;
-        $chambre->numero = $request->numero;
+    
         $chambre->nom_chambre = $request->nom_chambre;
         $chambre->prix_chambre = $request->prix_chambre;
         $chambre->nbr_per = $request->nbr_per;
         $chambre->description_chambre = $request->description_chambre;
         $chambre->disponible = $request->disponible ?? true;
-        $chambre->typeChambre = $request->typeChambre ?? 'standard';
+        $chambre->type_chambre_id = $request->type_chambre_id ?? 'standard';
         $chambre->image1 = $file1  ?? '';
         $chambre->image2 = $file2  ?? '';
         $chambre->image3 = $file3  ?? '';
         $chambre->image4 = $file4  ?? '';
-
+        $tr = new GoogleTranslate();
+    
+        // Translate nom_chambre
+        $chambre->translated_nom_chambre_fr = $tr->setSource('auto')->setTarget('fr')->translate($request->nom_chambre);
+        $chambre->translated_nom_chambre_ar = $tr->setSource('auto')->setTarget('ar')->translate($request->nom_chambre);
+        $chambre->translated_nom_chambre_es = $tr->setSource('auto')->setTarget('es')->translate($request->nom_chambre); 
+    
+        // Translate description_chambre
+        $chambre->translated_description_chambre_fr = $tr->setSource('auto')->setTarget('fr')->translate($request->description_chambre);
+        $chambre->translated_description_chambre_ar = $tr->setSource('auto')->setTarget('ar')->translate($request->description_chambre);
+        $chambre->translated_description_chambre_es = $tr->setSource('auto')->setTarget('es')->translate($request->description_chambre);
     
         $chambre->save();
         return redirect()->route('chambres.index');
@@ -125,10 +141,55 @@ class ChambreController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        $chambre = Chambre::findOrFail($id);
-        return Inertia::render('PagesAdmin/chambres/edit', ['chambre' => $chambre]);
+{
+    $chambre = Chambre::findOrFail($id);
+    return Inertia::render('PagesAdmin/Chambres/Edit', ['chambre' => $chambre]);
+}
+public function getTranslations(Request $request)
+{
+    $textToTranslate = [
+        'welcome' => 'Welcome to Cozy Suites',
+        'perfect_getaway' => 'Your perfect getaway destination',
+        'bookNow' => 'Book Now',
+        'roomType' => 'Room Types',
+        'Home'=>"Home",
+       'Reservations'=>"Reservations",
+        'Service'=>"Service",
+        'Rooms'=>"Rooms",
+        'login'=>"login",
+       'signup'=>"sign up",
+        'startDate' => ' Start Date',
+       'endDate'=>'End Date',
+        'personCount' =>'number of people',
+        'roomList'=> ' list of rooms',
+        'price' => 'price ',
+       'description' => 'Description',
+        'seeDetails' => 'view the details',
+        'all' => 'All',
+        'standard' => 'Standard',
+       'double' =>'Double',
+        'twin' =>'Twin',
+        'luxe' => 'Luxe',
+        'family' => 'Family',
+        'executive' => 'Executive',
+       'withView'=> 'with a view',
+        // Add other text strings you want to translate
+    ];
+
+    $lang = $request->input('lang', 'en'); // Default language is English if not specified
+
+    $translations = [];
+    $translator = new GoogleTranslate();
+
+    foreach ($textToTranslate as $key => $text) {
+        $translatedText = $translator->setSource('auto')->setTarget($lang)->translate($text);
+        $translations[$key] = $translatedText;
     }
+
+    return response()->json(['translations' => $translations]);
+}
+
+
 
     /**
      * Update the specified resource in storage.
@@ -137,44 +198,47 @@ class ChambreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Chambre $chambre)
     {
-        $request->validate([
-            'numero' => 'required|integer',
-            'nom_chambre' => 'required|string|max:100',
-            'prix_chambre' => 'required|integer',
-            'description_chambre' => 'required|string',
-            'image1' => 'required|string|max:255',
-            'image2' => 'nullable|string|max:255',
-            'image3' => 'nullable|string|max:255',
-            'image4' => 'nullable|string|max:255',
-            'disponible' => 'nullable|boolean',
-            'typeChambre' => 'nullable|in:standard,double,twin,luxe,familaile,executive,avecVue',
-        ]);
-        $chambre = Chambre::findOrFail($id);
+        // $request->validate([
+        //     'numero' => 'required|string|max:255',
+        //     'nom_chambre' => 'required|string|max:255',
+        //     'prix_chambre' => 'required|numeric',
+        //     'nbr_per' => 'required|integer',
+        //     'description_chambre' => 'required|string',
+        //     'disponible' => 'boolean',
+        //     'type_chambre_id' => 'required|integer',
+        //     'image1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     'image2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     'image3' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        //     'image4' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        // ]);
+    
         $chambre->numero = $request->numero;
         $chambre->nom_chambre = $request->nom_chambre;
         $chambre->prix_chambre = $request->prix_chambre;
+        $chambre->nbr_per = $request->nbr_per;
         $chambre->description_chambre = $request->description_chambre;
-        $chambre->disponible = $request->disponible;
-        $chambre->typeChambre = $request->typeChambre;
-        if ($request->has('image1')) {
-            $chambre->image1 = $request->image1;
-        }
-        if ($request->has('image2')) {
-            $chambre->image2 = $request->image2;
-        }
-        if ($request->has('image3')) {
-            $chambre->image3 = $request->image3;
-        }
-        if ($request->has('image4')) {
-            $chambre->image4 = $request->image4;
+        $chambre->disponible = $request->disponible ?? true;
+        $chambre->type_chambre_id = $request->type_chambre_id;
+    
+        $images = ['image1', 'image2', 'image3', 'image4'];
+    
+        foreach ($images as $image) {
+            if ($request->hasFile($image)) {
+                $fileName = time() . '_' . $image . '.' . $request->file($image)->getClientOriginalExtension();
+                $request->file($image)->move(public_path('images'), $fileName);
+                $chambre->$image = $fileName;
+            }
         }
     
         $chambre->save();
     
-        return Inertia::location(route('chambres.index'));
+        return redirect()->route('chambres.index')->with('success', 'Chambre modifiée avec succès');
     }
+    
+
+
     
 
     /**
@@ -185,6 +249,8 @@ class ChambreController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $chambre = Chambre::findOrFail($id);
+        $chambre->delete();
     }
+    
 }

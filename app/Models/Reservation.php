@@ -9,7 +9,7 @@ class Reservation extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'date_debut', 'date_fin', 'statu', 'etoile', 'date_reservation', 'nbr_personne', 'nbr_children', 'nbr_nuit', 'numero_chambre', 'id_chambre', 'id_user'
+          'date_debut', 'date_fin', 'statu', 'date_reservation', 'nbr_personne', 'nbr_children', 'nbr_nuit',  'id_chambre', 'id_user','type_chambre_id'
     ];
     public function chambre()
     {
@@ -26,5 +26,9 @@ class Reservation extends Model
     public function invites()
     {
         return $this->hasMany(Invite::class);
+    }
+    public function typeChambre()
+    {
+        return $this->belongsTo(TypeChambre::class, 'type_chambre_id');
     }
 }

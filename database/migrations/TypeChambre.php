@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TypeChambre extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','type_chambre',];
+    protected $fillable = ['id','type_chambre'];
 }

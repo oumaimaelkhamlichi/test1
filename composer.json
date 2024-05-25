@@ -10,8 +10,11 @@
         "inertiajs/inertia-laravel": "^0.6.3",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.2",
+        "laravel/socialite": "^5.14",
         "laravel/tinker": "^2.7",
-        "tightenco/ziggy": "^1.0"
+        "stichoza/google-translate-php": "^5.1",
+        "tightenco/ziggy": "^1.0",
+        "twilio/sdk": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
