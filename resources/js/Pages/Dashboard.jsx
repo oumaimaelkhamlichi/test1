@@ -30,62 +30,60 @@
 
 
 import Layout from './MyPages/Liens';
- import ReservationChart from './Shart/ReservationChart';
+import ReservationChart from './Shart/ReservationChart';
 import RoomRevenueChart from './Shart/RoomRevenueChart';
+import { FaUsers, FaClipboardList, FaBed, FaMoneyBillWave } from 'react-icons/fa';
 import './dashboard.css';
 
-export default function Dashboard({clients,comment,Chambres,reservations}) {
+export default function Dashboard({ clients, comment, Chambres, reservations }) {
     console.log(reservations)
     console.log(clients)
-   
+
     const total = reservations.reduce((acc, reservation) => {
         return acc + (reservation.chambre.prix_chambre * reservation.nbr_nuit);
     }, 0);
-    
-    
+
     console.log("Somme totale des prix des chambres : ", total);
+
     return (
-        <div>
-             <Layout />
-             <div className="Dashboard ml-80" style={{ display: 'flex' }}>
-        
-
-
-           
-            <div>
-                <div className="Total">
-                <div className="FS">
-                    <h2>client <img src="image/review.png" alt="" /></h2>
-                    {clients.length > 0 && (
-                        <p> {clients.length}</p>
-                    )}
+        <div className="min-h-screen bg-gray-100 p-4">
+            <Layout />
+            <div className="Dashboard ml-80 flex flex-col space-y-4">
+                <div className="flex space-x-4">
+                    <div className="bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg rounded-lg p-6 flex-1 transition-transform transform hover:scale-105 text-white">
+                        <h2 className="text-xl font-bold flex items-center">
+                            Clients <FaUsers className="ml-2 w-6 h-6" />
+                        </h2>
+                        <p className="text-3xl mt-2">{clients.length}</p>
+                    </div>
+                    <div className="bg-gradient-to-r from-green-400 to-teal-500 shadow-lg rounded-lg p-6 flex-1 transition-transform transform hover:scale-105 text-white">
+                        <h2 className="text-xl font-bold flex items-center">
+                            Réservations <FaClipboardList className="ml-2 w-6 h-6" />
+                        </h2>
+                        <p className="text-3xl mt-2">{reservations.length}</p>
+                    </div>
+                    <div className="bg-gradient-to-r from-pink-500 to-red-500 shadow-lg rounded-lg p-6 flex-1 transition-transform transform hover:scale-105 text-white">
+                        <h2 className="text-xl font-bold flex items-center">
+                            Chambres <FaBed className="ml-2 w-6 h-6" />
+                        </h2>
+                        <p className="text-3xl mt-2">{Chambres.length}</p>
+                    </div>
+                    <div className="bg-gradient-to-r from-yellow-400 to-orange-500 shadow-lg rounded-lg p-6 flex-1 transition-transform transform hover:scale-105 text-white">
+                        <h2 className="text-xl font-bold flex items-center">
+                            Total <FaMoneyBillWave className="ml-2 w-6 h-6" />
+                        </h2>
+                        <p className="text-3xl mt-2">{total} DH</p>
+                    </div>
                 </div>
-                <div className="TC">
-                    <h2>Reservation <img src="" alt="" /></h2>
-                    {reservations.length > 0 && (
-                        <p> {reservations.length}</p>
-                    )}
-                </div>
-                <div className="TC">
-                    <h2>chambres <img src="image/review.png" alt="" /></h2>
-                    {Chambres.length > 0 && (
-                        <p> {clients.length}</p>
-                    )}
-                </div>
-                <div className="TC">
-                    <h2>Total: <img src="" alt="" /></h2>
-                    {/* Ajoutez votre logique de calcul ici */}
-                      <p>{total}DH</p>
-                        </div>
-                </div>
-                <div  style={{ display: 'flex' }}>
-                <ReservationChart reservations={reservations}/>
-                <RoomRevenueChart reservations={reservations}/> 
+                <div className="flex space-x-4">
+                    <div className="bg-white shadow-lg rounded-lg p-6 flex-1">
+                        <ReservationChart reservations={reservations} />
+                    </div>
+                    <div className="bg-white shadow-lg rounded-lg p-6 flex-1">
+                        <RoomRevenueChart reservations={reservations} />
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
-        
     );
 }
-

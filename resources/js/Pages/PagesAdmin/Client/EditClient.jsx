@@ -5,6 +5,7 @@ import TextInput from '@/Components/TextInput';
 import Swal from 'sweetalert2';
 import { Inertia } from '@inertiajs/inertia';
 import { FaUser, FaEnvelope, FaPhone, FaMapMarkerAlt, FaCity, FaFlag, FaCalendarAlt, FaChild, FaHeart } from 'react-icons/fa';
+import Layout from '@/Pages/MyPages/Liens';
 
 const EditClient = ({ user }) => {
     const { data, setData, put, processing, errors } = useForm({
@@ -44,7 +45,9 @@ const EditClient = ({ user }) => {
     };
 
     return (
-        <div className="clients bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+        <div>
+            <Layout/>
+             <div className="clients bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
             <div className="max-w-lg mx-auto bg-white rounded shadow-lg p-8">
                 <h1 className="text-2xl font-bold mb-6">Modifier un client</h1>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -191,6 +194,8 @@ const EditClient = ({ user }) => {
                 </form>
             </div>
         </div>
+        </div>
+       
     );
 };
 

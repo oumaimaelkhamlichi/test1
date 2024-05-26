@@ -21,7 +21,7 @@ const ServicesComponent = (props) => {
       cancelButtonText: "Annuler",
     }).then((result) => {
       if (result.isConfirmed) {
-        Inertia.delete(`service/${id}`).then(() => {
+        Inertia.delete(`services/${id}`).then(() => {
           Swal.fire({
             icon: "success",
             title: "Le service a été supprimé avec succès",
@@ -64,7 +64,7 @@ const ServicesComponent = (props) => {
       formData.append('image', editedValue.image);
     }
 
-    Inertia.post(`service/${id}`, formData, {
+    Inertia.post(`services/${id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       }

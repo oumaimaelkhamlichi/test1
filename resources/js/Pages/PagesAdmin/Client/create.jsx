@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from '@inertiajs/react';
 import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import Swal from 'sweetalert2';
-import Layout from '@/Pages/MyPages/Liens';
-import './AjouterClient.css'; // Importez votre fichier de styles CSS
+import Layout from '@/Pages/MyPages/Layout';
 
 const AjouterClient = () => {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -60,57 +59,57 @@ const AjouterClient = () => {
         }
     };
 
+    // Pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const fieldsPerPage = 3; // Nombre de champs par page
+    const indexOfLastField = currentPage * fieldsPerPage;
+    const indexOfFirstField = indexOfLastField - fieldsPerPage;
+    const currentFields = Object.keys(data).slice(indexOfFirstField, indexOfLastField);
+
     return (
         <div className="client-container">
             <Layout />
-            <div className='client-form'>
-                <h1>Ajouter un Client</h1>
-                <form onSubmit={handleSubmit}>
-                    <div className='row'>
-                        <div className='col1'>
-                            <InputLabel htmlFor="name" value="Name" />
-                            <TextInput
-                                id="name"
-                                name="name"
-                                type="text"
-                                value={data.name}
-                                onChange={handleOnChange}
-                                error={errors.name}
-                                className="form-control"
-                            />
-                            {errors.name && <div className="error">{errors.name}</div>}
-
-                            <InputLabel htmlFor="cin" value="CIN" />
-                            <TextInput
-                                id="cin"
-                                name="cin"
-                                type="text"
-                                value={data.cin}
-                                onChange={handleOnChange}
-                                error={errors.cin}
-                                className="form-control"
-                            />
-                            {errors.cin && <div className="error">{errors.cin}</div>}
-
-                            {/* Ajoutez d'autres champs de saisie ici */}
-
-                            <InputLabel htmlFor="password" value="Password" />
-                            <TextInput
-                                id="password"
-                                name="password"
-                                type="password"
-                                value={data.password}
-                                onChange={handleOnChange}
-                                error={errors.password}
-                                className="form-control"
-                            />
-                            {errors.password && <div className="error">{errors.password}</div>}
-                        </div>
-                        <div className='col2'>
-                            {/* Ajoutez d'autres champs de saisie ici */}
-                        </div>
+            <div className="client-form">
+                <h1 className="text-2xl font-bold mb-4">Ajouter un Client</h1>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {currentFields.map((fieldName, index) => (
+                            <div key={index} className="flex flex-col">
+                                <InputLabel htmlFor={fieldName} value={fieldName} />
+                                <TextInput
+                                    id={fieldName}
+                                    name={fieldName}
+                                    type="text"
+                                    value={data[fieldName]}
+                                    onChange={handleOnChange}
+                                    error={errors[fieldName]}
+                                    className="input-field"
+                                />
+                                {errors[fieldName] && <div className="text-red-500">{errors[fieldName]}</div>}
+                            </div>
+                        ))}
                     </div>
-                    <button type="submit" disabled={processing} className="btn btn-primary">Submit</button>
+                    <div className="flex justify-between mt-4">
+                        <button
+                            type="button"
+                            className={`btn ${currentPage === 1 ? 'btn-disabled' : 'btn-primary'}`}
+                            onClick={() => setCurrentPage(currentPage - 1)}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </button>
+                        <button
+                            type="button"
+                            className={`btn ${currentFields.length < fieldsPerPage ? 'btn-disabled' : 'btn-primary'}`}
+                            onClick={() => setCurrentPage(currentPage + 1)}
+                            disabled={currentFields.length < fieldsPerPage}
+                        >
+                            Next
+                        </button>
+                        <button type="submit" className="btn btn-primary" disabled={processing}>
+                            Submit
+                        </button>
+                    </div>
                 </form>
             </div>
             <div className="additional-info">

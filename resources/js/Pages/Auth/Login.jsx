@@ -131,9 +131,9 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <div className='login-container'>
-            <div className='skewed-container'>
-                <div className='welcome-half'>
-                    <img src="/logo1.png" alt="Logo" width={150} height={150} /><br /><br />
+            <div className='skewed-container '>
+                <div className='welcome-half '>
+                    <img src="images/logoHotel.PNG" alt="Logo" width={150} height={150} /><br /><br />
                     <h1><b>Welcome To Hotel Cozy Suites</b></h1><br />
                     <p>Please enter your username and password</p>
                 </div>

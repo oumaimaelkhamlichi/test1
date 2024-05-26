@@ -253,17 +253,19 @@ public function index()
         $reservation->nbr_nuit = $request->nbr_nuit;
         $reservation->id_user = $request->id_user;
         $reservation->type_chambre_id = $request->type_chambre_id;
+      
+        // ici
+        $reservation->id_chambre = $chambre->id;
+        
         $reservation->save();
     
         $chambre->disponible = false;
+        
         $chambre->save();
-    
-        return response()->json([
-            'message' => 'Reservation has been successfully added.',
-            'chambre_id' => $chambre->id,
+        return redirect()->route('reservation.success', [
             'chambre_numero' => $chambre->numero,
-            'description' => $chambre->description,
-            // 'prix_total' => $reservation->nbr_nuit * $chambre->prix_par_nuit
+            'description' => $chambre->description_chambre,
+            'prix_total' => $chambre->prix_chambre * $reservation->nbr_nuit,
         ]);
     }
 }

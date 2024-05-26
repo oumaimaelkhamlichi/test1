@@ -37,7 +37,7 @@ use Inertia\Inertia;
 //         'phpVersion' => PHP_VERSION,
 //     ]);
 // });
-Route::get('/', function () {
+Route::get('/login', function () {
     return Inertia::render('Auth/Login', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -93,10 +93,12 @@ Route::get('/contact',function(){
 })->name('MyPages.Contact');
 
 Route::get('afficher', [ServiceController::class, 'afficher'])->name('services.afficher');
-// nouveau
+// nouveau                                                           
 Route::get('create1', [ReservationController::class, 'create1'])->name('reservation.create1');
-Route::get('store1', [ReservationController::class, 'store1'])->name('reservation.store1');
-
+Route::post('store1', [ReservationController::class, 'store1'])->name('reservation.store1');
+Route::get('/reservation/success', function () {
+    return Inertia::render('ReservationSuccess');
+})->name('reservation.success');
 
 // nouveau
 Route::get('/Register',function(){
@@ -115,7 +117,7 @@ Route::middleware('auth')->group(function () {
 Route::get('auth/google', [GoogleController::class, 'redirect'])->name('google-auth');
 Route::get('auth/google/call-back', [GoogleController::class, 'callbackGoogle']);
 // client routes
-Route::get('/recherchetypechambre', [TypeChambreController::class, 'search'])->name('recherche.index2');
+Route::get('/', [TypeChambreController::class, 'search'])->name('recherche.index2');
 // middleware 
 Route::get('/translations', [TypeChambreController::class, 'getTranslations']);
 // Route::middleware(['role:admin'])->group(function () {

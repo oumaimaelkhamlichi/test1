@@ -146,7 +146,9 @@ const Index = ({ reservations }) => {
               {filteredReservations.map((reservation) => (
                 <tr key={reservation.id}>
                   <td className="px-6 py-4 whitespace-nowrap">{reservation.id}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{reservation.chambre.nom_chambre}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {reservation.chambre ? reservation.chambre.nom_chambre : 'Chambre non assignée'}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap">{reservation.date_reservation}</td>
                   <td
                     onClick={() => handleClientClick(reservation.user)}
@@ -175,7 +177,7 @@ const Index = ({ reservations }) => {
                       <FaTrashAlt className="mr-1" />
                     </button>
                   </td>
-                  <td className="px-6  whitespace-nowrap">
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <Link href={route('reservation.edit', reservation.id)} className="ml-6 text-red-600 hover:text-red-900">
                       <FaEdit className="mr-1" />
                     </Link>
@@ -187,7 +189,7 @@ const Index = ({ reservations }) => {
         </div>
         {selectedClient && (
           <div className="client-info-tooltip">
-            <p><img className='img' src="images/client.png" alt="" /></p>
+            <p><img className='img' src="images/client.png" alt="Client" /></p>
             <p><strong>Nom:</strong> {selectedClient.name}</p>
             <p><strong>CIN:</strong> {selectedClient.cin}</p>
             <p><strong>Numéro de téléphone:</strong> {selectedClient.numero_telephone}</p>

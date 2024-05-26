@@ -54,7 +54,18 @@ export default function ShowTypeChambre({ typechambre, chambreServs, comment, ty
 
   return (
     <div className="container mt-4">
-      {/* <Header/> */}
+        <div className="relative">
+      <img 
+        src="/./images/create1.jpg" 
+        alt="Description de l'image" 
+        className="w-full h-80 border-2 border-gray-300 rounded-lg shadow-lg object-cover mb-5" 
+      />
+      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg">
+        <h1 className="text-white text-lg font-bold">
+          Réserver votre chambre tous simplement  en Cuzy suite ! .
+        </h1>
+      </div>
+    </div>
       {!showReservationForm && (
         <>
           <div className="row mb-4">

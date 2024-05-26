@@ -125,7 +125,7 @@ class ServiceController extends Controller
 
         $service->save();
 
-        return redirect()->route('service.index');
+        return redirect()->route('services.index');
     }
     /**
      * Remove the specified resource from storage.

@@ -44,11 +44,11 @@ class TypeChambreController extends Controller
 {
     $request->validate([
         'prix_par_nuit' => 'required|integer',
-        'description' => 'required|string|max:2000',
-        'image1' => 'nullable|file|image|max:2048',
-        'image2' => 'nullable|file|image|max:2048',
-        'image3' => 'nullable|file|image|max:2048',
-        'image4' => 'nullable|file|image|max:2048',
+        'description' => 'required|string',
+        'image1' => 'nullable|file|image',
+        'image2' => 'nullable|file|image',
+        'image3' => 'nullable|file|image',
+        'image4' => 'nullable|file|image',
         'typeChambre' => 'required|string|in:Chambre standard,Chambre double,Chambre twin,Suite,Chambre familiale,Chambre avec vue,Chambre de luxe,Chambre exécutive',
     ]);
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from '@inertiajs/inertia-react';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 function Navbar({ language, handleLanguageChange, translations }) {
   const {
@@ -9,6 +10,7 @@ function Navbar({ language, handleLanguageChange, translations }) {
     Rooms = 'Rooms',
     login = 'Login',
     signup = 'Sign Up',
+
   } = translations;
 
   return (
@@ -42,6 +44,15 @@ function Navbar({ language, handleLanguageChange, translations }) {
         <Link to="/contact" className="bg-[#d8be81c7] text-white rounded p-2 w-24 text-center">
           {signup}
         </Link>
+        <Link
+                href={route('logout')}
+                method="post"
+                as="button"
+                className="bg-[#d8be81c7] text-white rounded p-2 w-24 text-center"
+              >
+                <FaSignOutAlt className="mr-2 inline" />
+                Log Out
+              </Link>
       </div>
     </div>
   );

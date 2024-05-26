@@ -38,7 +38,8 @@ function AjouterReserv({ typeChambres }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    post(route('reservation.store'), {
+  
+    post(route('reservation.store1'), {
       onSuccess: (response) => {
         Swal.fire({
           icon: 'success',
@@ -47,7 +48,7 @@ function AjouterReserv({ typeChambres }) {
             <p>La réservation a été ajoutée avec succès.</p>
             <p><strong>Numéro de chambre :</strong> ${response.props.chambre_numero}</p>
             <p><strong>Description :</strong> ${response.props.description}</p>
-            <p><strong>Prix total :</strong> ${response.props.prix_total} €</p>
+            <p><strong>Prix total :</strong> ${response.props.prix_total} DH</p>
           `
         }).then(() => {
           reset();
@@ -58,7 +59,7 @@ function AjouterReserv({ typeChambres }) {
         Swal.fire({
           icon: 'error',
           title: 'Erreur',
-          text: errorMessage
+          text: 'error dans la reservation '
         });
       }
     });
@@ -66,6 +67,19 @@ function AjouterReserv({ typeChambres }) {
 
   return (
     <div className="container mt-5">
+     
+      <div className="relative">
+      <img 
+        src="images/create1.jpg" 
+        alt="Description de l'image" 
+        className="w-full h-80 border-2 border-gray-300 rounded-lg shadow-lg object-cover" 
+      />
+      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-lg">
+        <h1 className="text-white text-lg font-bold">
+          Réserver votre chambre tous simplement  en Cuzy suite ! .
+        </h1>
+      </div>
+    </div>
       {/* <Header/> */}
       {typeChambres && typeChambres.length > 0 && (
         <form onSubmit={handleSubmit} className="card p-4 shadow">
@@ -137,8 +151,8 @@ function AjouterReserv({ typeChambres }) {
               />
               <InputError message={errors.nbr_children} />
             </div>
-            <div className="inputContainer col-md-6">
-              <InputLabel htmlFor="nbr_nuit" value="Nombre de nuits" />
+            <div className="inputContainer col-md-6 disabled">
+              <InputLabel htmlFor="nbr_nuit" value="Nombre de nuits"  />
               <TextInput
                 id="nbr_nuit"
                 name="nbr_nuit"

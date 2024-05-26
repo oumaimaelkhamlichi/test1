@@ -93,6 +93,8 @@ export default function Layout() {
               <div className={`absolute left-full top-0 bg-gray-800 text-white py-2 rounded-md shadow-lg transition duration-300 ${isDropdownOpen1 ? 'block' : 'hidden'}`}>
                 <Link href={route('chambres.index')} className="block px-4 py-2 hover:bg-gray-600">Afficher Chambres</Link>
                 <Link href={route('chambres.create')} className="block px-4 py-2 hover:bg-gray-600">Ajouter Chambre</Link>
+                <Link href={route('typechambres.index')} className="block px-4 py-2 hover:bg-gray-600">les types chambres</Link>
+
                 <Link href={route('typechambres.create')} className="block px-4 py-2 hover:bg-gray-600">Ajouter type chambre</Link>
               </div>
             </li>
