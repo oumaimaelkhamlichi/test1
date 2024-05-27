@@ -108,7 +108,7 @@ export default function AjouterService({ typechambres }) {
                 <select name="type_chambre_id" id="type_chambre_id" onChange={handleOnChange} className="block w-full mt-1">
                   <option value="">---choisir---</option>
                   {typechambres.map((typechambre) => (
-                    <option key={typechambre.id} value={typechambre.id}>{typechambre.id}</option>
+                    <option key={typechambre.id} value={typechambre.id}>{typechambre.id} (ID: {typechambre.typeChambre})</option>
                   ))}
                 </select>
                 <InputError message={errors.type_chambre_id} className="mt-2 text-red-500" />

@@ -110,7 +110,7 @@ class ChambreServiceController extends Controller
 
     // Enregistrez l'objet ChambreService dans la base de données
     $chambreService->save();
-    return redirect()->route('serchambre.index');
+    return redirect()->route('chambres.index');
 
     // Rediriger l'utilisateur vers une page de confirmation ou une autre page appropriée
     // return redirect()->route('chambre_services.index')->with('success', 'Le service de chambre a été ajouté avec succès.');

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './show.css';
 import Navbar from '@/Layouts/Navbar'; // Import Navbar
-
+// import Footer from '@/Pages/PageClient/Footer';
+import Footer from '@/Pages/PageClient/Footer';
 export default function Show(props) {
   const [translations, setTranslations] = useState({});
   const [language, setLanguage] = useState('en'); 
@@ -58,17 +59,18 @@ text='Nous sommes ravis de vous accueillir à Cazy suite, où le confort, le lux
             <img src={service.image} alt={service.nom} className="service-image" />
             <div className="card-content">
               <h2 className="card-title">{service.nom}</h2>
-              <p className="card-description">{service.description}</p>
+              <h1 className="card-description">{service.description}</h1>
             </div>
           </div>
         ))}
       </div>
-      <div className='divv'>
+      <div className='mt-4'><Footer/> </div>
+      {/* <div className='divv'>
         <p className='pp'>
           <h1>{titre}</h1>
        {descrip}
         </p>
-      </div>
+      </div> */}
       <div>
         <img src="/images/serv1.jpg" alt="" />
         <img src="/images/serv2.jpg" alt="" />

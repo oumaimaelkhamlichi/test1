@@ -384,7 +384,10 @@ public function getTranslations(Request $request)
      'bienvenu'=>'Bienvenue à Notre Hôtel',
      'text'=>'Nous sommes ravis de vous accueillir à Cazy suite, où le confort, le luxe et le service exceptionnel se rencontrent pour créer une expérience inoubliable.',
         // Add other text strings you want to translate
+        'titreS'=>'Bonjour et bienvenue à Cuzy Suite !',
+        'descrips'=> 'Nous sommes ravis de vous accueillir dans notre hôtel exclusif où le confort, le luxe et le service exceptionnel sont notre priorité.Que vous soyez ici pour affaires ou pour le plaisir, nous nous engageons à rendre votre séjour inoubliable.',
     ];
+
 
     $lang = $request->input('lang', 'auto'); // Default language is English if not specified
 

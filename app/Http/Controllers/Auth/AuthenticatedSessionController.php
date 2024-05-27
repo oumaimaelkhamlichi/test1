@@ -58,11 +58,13 @@ public function store(LoginRequest $request): RedirectResponse
     $user = Auth::user();
 
     // Vérifier le rôle de l'utilisateur
-    if ($user->role === 'admin'&& $user->cin =='r4556') {
+    if ($user->role === 'admin'&& $user->cin =='r45566') {
         return redirect()->intended(RouteServiceProvider::HOME);
+        // return redirect()->route('/dashbord');
+
     } 
     else{
-        return redirect()->route('MyPages.wel');
+        return redirect()->route('homee');
     }
     // if ($user->role == 'client'){
     //     return redirect()->route('MyPages.wel');

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('id_user')->constrained('users');
             $table->string('texte');
             $table->boolean('jadore')->default(false);
-            $table->foreignId('id_type_chambre')->constrained('type_chambres');
+            $table->foreignId('id_type_chambre')->constrained('type_chambres')->onDelete('cascade');
             $table->integer('rating')->nullable()->change();
             $table->timestamps();
         });

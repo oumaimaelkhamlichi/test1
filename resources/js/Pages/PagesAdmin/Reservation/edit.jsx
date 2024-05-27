@@ -60,7 +60,7 @@ const Edit = ({ reservation, chambres, defaultUserId }) => {
         <h1 className="text-2xl font-bold mb-6 text-center">Modifier Réservation</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex flex-col space-y-2">
-            date de debut
+            check in
             <input
               type="date"
               name="date_debut"
@@ -71,6 +71,7 @@ const Edit = ({ reservation, chambres, defaultUserId }) => {
             />
           </div>
           <div className="flex flex-col space-y-2">
+            check out
             <input
               type="date"
               name="date_fin"
@@ -81,6 +82,7 @@ const Edit = ({ reservation, chambres, defaultUserId }) => {
             />
           </div>
           <div className="flex flex-col space-y-2">
+            statu
             <input
               type="text"
               name="statu"
@@ -91,6 +93,7 @@ const Edit = ({ reservation, chambres, defaultUserId }) => {
             />
           </div>
           <div className="flex flex-col space-y-2">
+            date reservation
             <input
               type="date"
               name="date_reservation"
@@ -101,6 +104,7 @@ const Edit = ({ reservation, chambres, defaultUserId }) => {
             />
           </div>
           <div className="flex flex-col space-y-2">
+            nombre de personnes
             <input
               type="number"
               name="nbr_personne"
@@ -111,6 +115,7 @@ const Edit = ({ reservation, chambres, defaultUserId }) => {
             />
           </div>
           <div className="flex flex-col space-y-2">
+            nombre enfants
             <input
               type="number"
               name="nbr_children"
@@ -121,6 +126,7 @@ const Edit = ({ reservation, chambres, defaultUserId }) => {
             />
           </div>
           <div className="flex flex-col space-y-2">
+            nombre de nuits
             <input
               type="number"
               name="nbr_nuit"

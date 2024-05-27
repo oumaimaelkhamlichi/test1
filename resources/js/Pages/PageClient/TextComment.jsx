@@ -5,6 +5,7 @@ import InputError from '@/Components/InputError';
 function Texte({ value, onChange, errors }) {
   return (
     <div className="col-md-10">
+      <h4 className='text-yellow-600'>Ajouter un commentaire</h4>
       <InputLabel htmlFor="comment" value="Comment" />
       <textarea
         name="texte"

@@ -207,11 +207,12 @@ public function index()
     }
     public function create1()
     {
-        // $user = Auth::user();
+         $user = Auth::user();
 
         $typeChambres = TypeChambre::all();
         return Inertia::render('PageClient/Reservation/create1', [
             'typeChambres' => $typeChambres,
+            'defaultUserId' => $user->id,
             // 'defaultUserId' => $user->id
 ]);
     }
@@ -241,7 +242,9 @@ public function index()
             })->first();
     
         if (!$chambre) {
-            return response()->json(['error' => 'No available room of this type for the selected dates.'], 404);
+        return back()->withErrors(['error' => 'La chambre est déjà réservée pour cette période.'])->withInput();
+
+            // return redirect()->route('reservation.error')->with('error', 'No available room of this type for the selected dates.');
         }
     
         $reservation = new Reservation();
@@ -262,10 +265,15 @@ public function index()
         $chambre->disponible = false;
         
         $chambre->save();
-        return redirect()->route('reservation.success', [
-            'chambre_numero' => $chambre->numero,
-            'description' => $chambre->description_chambre,
-            'prix_total' => $chambre->prix_chambre * $reservation->nbr_nuit,
+        return response()->json([
+            'status' => 'success',
+            'message' => 'La chambre est disponible pour cette période.',
+            'data' => [
+                'chambre_numero' => $chambre->numero,
+                'description' => $chambre->description_chambre,
+                'prix_total' => $chambre->prix_chambre * $reservation->nbr_nuit,
+            ]
         ]);
+        
     }
 }

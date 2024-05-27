@@ -75,6 +75,7 @@ class RegisteredUserController extends Controller
     public function index(): Response
     {
         $users = User::all();
+
         return Inertia::render('PagesAdmin/Client/index', ['users' => $users]);
     }
 
@@ -115,12 +116,20 @@ class RegisteredUserController extends Controller
             'nombre_enfants' => $request->nombre_enfants,
             'etat_civil' => $request->etat_civil,
         ]);
-
+        event(new Registered($user));
+        Auth::login($user);
+        if($user->role=='admin'){
+            return redirect(RouteServiceProvider::HOME);
+            
+        }
+        else{
+            return redirect()->route('users.index');
+        }
         // event(new Registered($user));
         // Auth::login($user);
 
         // return redirect(RouteServiceProvider::HOME);
-        return redirect()->route('users.index');
+        // return redirect()->route('users.index');
     }
 
     public function show(User $user): Response

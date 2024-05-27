@@ -82,11 +82,33 @@ export default function Register(props) {
                 <InputError message={errors.nombre_enfants} className="input-error" />
               </div>
 
-              <div className="form-group">
-                <InputLabel htmlFor="etat_civil" value="Marital Status" />
-                <TextInput id="etat_civil" name="etat_civil" value={data.etat_civil} onChange={handleOnChange} required />
-                <InputError message={errors.etat_civil} className="input-error" />
-              </div>
+              <InputLabel value="État Civil" />
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="etat_civil"
+                  value="célibataire"
+                  checked={data.etat_civil === 'célibataire'}
+                  onChange={handleOnChange}
+                />
+                Célibataire
+              </label>
+            </div>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="etat_civil"
+                  value="marié"
+                  checked={data.etat_civil === 'marié'}
+                  onChange={handleOnChange}
+                />
+                Marié
+              </label>
+            </div>
+          
+     
 
               <div className="form-group">
                 <InputLabel htmlFor="date_naissance" value="Date of Birth" />

@@ -11,7 +11,7 @@ const ServicesComponent = (props) => {
 
   const handleDelete = id => {
     Swal.fire({
-      title: "Êtes-vous sûr de vouloir supprimer cette chambre ?",
+      title: "Êtes-vous sûr de vouloir supprimer ce Service  ?",
       text: "Cette action est irréversible !",
       icon: "warning",
       showCancelButton: true,
@@ -82,8 +82,11 @@ const ServicesComponent = (props) => {
   return (
     <div className='dd'>
       <Layout />
+    
       <div className='services-container'>
+       
         {props.services.map(service => (
+          
           <div key={service.id} className="card">
             <img src={`/${service.image}`} alt={service.nom} className="service-image" />
             <div className="card-content">

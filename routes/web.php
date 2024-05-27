@@ -11,6 +11,7 @@ use App\Http\Controllers\ChambreServiceController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashbordController;
 use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TypeChambreController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Application;
@@ -37,7 +38,7 @@ use Inertia\Inertia;
 //         'phpVersion' => PHP_VERSION,
 //     ]);
 // });
-Route::get('/login', function () {
+Route::get('/loginn', function () {
     return Inertia::render('Auth/Login', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -45,6 +46,9 @@ Route::get('/login', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::get('/recherchetypechambre', [TypeChambreController::class, 'search'])->name('recherche.index2');
+Route::get('/', [HomeController::class, 'home'])->name('homee');
+
 // Route::get('/', function () {
 //     return Inertia::render('Auth/Login');
 // });
@@ -66,11 +70,16 @@ Route::resource('typechambres', TypeChambreController::class);
 // })->middleware(['auth', 'verified'])->name('dashboard');
 //chambre
 //Clients
-Route::get('/page', function () {
-    return Inertia::render('PagesClient/Accueil');
+Route::get('/pagee', function () {
+    return Inertia::render('PageClient/Event');
 });
-//Clients
+Route::get('/gallery', function () {
+    return Inertia::render('MyPages/ImgStyle');
+});
 
+//Clients
+Route::get('/reservation/success', [ReservationController::class, 'success'])->name('reservation.success');
+Route::get('/reservation/error', [ReservationController::class, 'error'])->name('reservation.error');
 
 Route::put('/reservations/cancel/{id}', [ReservationController::class, 'cancel']);
 
@@ -83,7 +92,7 @@ Route::put('/reservations/cancel/{id}', [ReservationController::class, 'cancel']
 // })->name('dashboard');
 Route::get('/wel',function(){
     return Inertia::render('MyPages/Home');
-})->name('MyPages.wel')->middleware(['auth', 'verified']);;
+})->name('MyPages.wel')->middleware(['auth', 'verified']);
 Route::get('/main',function(){
     return Inertia::render('MyPages/Main');
 });
@@ -94,7 +103,7 @@ Route::get('/contact',function(){
 
 Route::get('afficher', [ServiceController::class, 'afficher'])->name('services.afficher');
 // nouveau                                                           
-Route::get('create1', [ReservationController::class, 'create1'])->name('reservation.create1');
+Route::get('create1', [ReservationController::class, 'create1'])->name('reservation.create1')->middleware(['auth', 'verified']);;
 Route::post('store1', [ReservationController::class, 'store1'])->name('reservation.store1');
 Route::get('/reservation/success', function () {
     return Inertia::render('ReservationSuccess');
@@ -117,7 +126,7 @@ Route::middleware('auth')->group(function () {
 Route::get('auth/google', [GoogleController::class, 'redirect'])->name('google-auth');
 Route::get('auth/google/call-back', [GoogleController::class, 'callbackGoogle']);
 // client routes
-Route::get('/', [TypeChambreController::class, 'search'])->name('recherche.index2');
+
 // middleware 
 Route::get('/translations', [TypeChambreController::class, 'getTranslations']);
 // Route::middleware(['role:admin'])->group(function () {
@@ -153,7 +162,7 @@ Route::get('/home', function () {
     if ($user->role == 'admin') {
         return redirect()->intended(RouteServiceProvider::HOME);
     } else {
-        return redirect()->route('MyPages.wel');
+        Route::get('/', [HomeController::class, 'home'])->name('homee');
     }
 })->name('home');
 

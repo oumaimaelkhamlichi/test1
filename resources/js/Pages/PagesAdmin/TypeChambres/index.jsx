@@ -34,9 +34,9 @@ export default function Index({ typechambres }) {
   return (
     <div>
       <Layout />
-      <div className="min-h-screen bg-blue-50 flex flex-col items-center py-10">
+      <div className="min-h-screen bg-blue-30 flex flex-col items-center py-10 ml-80">
         <div className="w-full flex justify-between items-center mb-10 px-6">
-          <h1 className="text-4xl font-bold text-blue-700">Types de Chambres</h1>
+          <h1 className="text-4xl font-bold text-gray-400 ml-80">Types de Chambres</h1>
           <Link
             href="/typechambres/create"
             className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700 focus:outline-none focus:bg-green-700 flex items-center"

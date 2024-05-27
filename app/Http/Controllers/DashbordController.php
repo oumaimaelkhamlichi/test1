@@ -6,6 +6,7 @@ use App\Models\Chambre;
 use App\Models\Comment;
 use App\Models\Dashbord;
 use App\Models\Reservation;
+use App\Models\TypeChambre;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,12 +18,14 @@ class DashbordController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
+        $types=TypeChambre::all();
         $clients = User::all();
         $comment=Comment::all();
         $chambres = Chambre::all();
         $reservations = Reservation::with('chambre', 'user')->get();
-        return inertia::render('Dashboard', ['clients' => $clients,'comment' => $comment,'Chambres'=>$chambres,'reservations'=>$reservations]);
+        return inertia::render('Dashboard', ['types' => $types,'clients' => $clients,'comment' => $comment,'Chambres'=>$chambres,'reservations'=>$reservations]);
     }
 
     /**

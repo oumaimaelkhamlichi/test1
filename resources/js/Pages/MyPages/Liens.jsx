@@ -69,7 +69,7 @@ export default function Layout() {
         <div className="max-w-full mx-auto px-4">
           <ul className="flex flex-col items-start space-y-6">
             <li className="mb-6 w-full text-center">
-              <Link className="text-white text-xl font-bold">
+              <Link className="text-white text-xl font-bold" >
                 <p className="text-green-200">Admin Dashboard</p>
                 <FaUserShield size={50} color="white" className="ml-20 " /> {/* Utiliser l'icône avec des propriétés personnalisées */}
               </Link>
@@ -91,11 +91,13 @@ export default function Layout() {
                 </svg>
               </button>
               <div className={`absolute left-full top-0 bg-gray-800 text-white py-2 rounded-md shadow-lg transition duration-300 ${isDropdownOpen1 ? 'block' : 'hidden'}`}>
-                <Link href={route('chambres.index')} className="block px-4 py-2 hover:bg-gray-600">Afficher Chambres</Link>
-                <Link href={route('chambres.create')} className="block px-4 py-2 hover:bg-gray-600">Ajouter Chambre</Link>
+                <Link href={route('chambres.index')} className="block px-4 py-2 hover:bg-gray-600">Les Chambres</Link>
                 <Link href={route('typechambres.index')} className="block px-4 py-2 hover:bg-gray-600">les types chambres</Link>
 
+                <Link href={route('chambres.create')} className="block px-4 py-2 hover:bg-gray-600">Ajouter Chambre</Link>
+
                 <Link href={route('typechambres.create')} className="block px-4 py-2 hover:bg-gray-600">Ajouter type chambre</Link>
+
               </div>
             </li>
 
@@ -179,6 +181,8 @@ export default function Layout() {
                 </svg>
               </button>
               <div className={`absolute left-full top-0 bg-gray-800 text-white py-2 rounded-md shadow-lg transition duration-300 ${isDropdownOpen5 ? 'block' : 'hidden'}`}>
+              <Link href={route('users.create')} className="block px-4 py-2 hover:bg-gray-600">ajouter client </Link>
+
                 <Link href={route('users.index')} className="block px-4 py-2 hover:bg-gray-600">Clients</Link>
               </div>
             </li>

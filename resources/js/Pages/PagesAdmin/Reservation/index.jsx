@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '@/Pages/MyPages/Liens';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Inertia } from '@inertiajs/inertia';
 import { Link } from '@inertiajs/react';
-import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import { FaEdit, FaIdCard, FaPlus, FaSearchPlus, FaTrashAlt } from 'react-icons/fa';
 
 const Index = ({ reservations }) => {
   const [selectedClient, setSelectedClient] = useState(null);
@@ -12,7 +12,14 @@ const Index = ({ reservations }) => {
   const [showCancelled, setShowCancelled] = useState(false);
   const [clientCin, setClientCin] = useState('');
   const [reservationDate, setReservationDate] = useState('');
-
+  useEffect(() => {
+    if (selectedClient) {
+      const timer = setTimeout(() => {
+        setSelectedClient(null);
+      }, 5000); // 5000ms = 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [selectedClient]);
   const handleClientClick = (client) => {
     setSelectedClient(client);
   };
@@ -94,42 +101,77 @@ const Index = ({ reservations }) => {
   );
 
   return (
+   
     <div>
+      {selectedClient && (
+        <div style={{ width:'300px' }}
+         className="client-info-tooltip bg-blue-100 border border-blue-200 shadow-lg rounded-lg p-6 ml-80">
+        <p className="text-lg font-semibold">Informations du client</p>
+        {/* <hr className="my-3 border-t border-gray-300"> */}
+        <p><strong>Nom:</strong> {selectedClient.name}</p>
+        <p><strong>CIN:</strong> {selectedClient.cin}</p>
+        <p><strong>Numéro de téléphone:</strong> {selectedClient.numero_telephone}</p>
+        <p><strong>Nationalité:</strong> {selectedClient.nationalite}</p>
+      </div>
+        )}
       <Layout />
-      <div className="index-container ml-80">
-        <h1 className="text-3xl font-bold mb-6">Liste des réservations</h1>
-        <button
-          onClick={toggleShowCancelled}
-          className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md shadow-md transition duration-300 ease-in-out mb-4"
-        >
-          {showCancelled ? 'Afficher toutes les réservations' : 'Afficher les réservations annulées'}
-        </button>
-        <div className="filters mb-4">
-          <input
-            type="text"
-            placeholder="Filtrer par CIN du client"
-            value={clientCin}
-            onChange={(e) => setClientCin(e.target.value)}
-            className="mr-2 px-2 py-1 border rounded input"
-          />
-          <button onClick={handleFilterByCin} className="px-2 py-1 bg-green-500 text-white rounded mr-2">
-            Filtrer par CIN
-          </button>
-          <input
-            type="date"
-            placeholder="Filtrer par date de réservation"
-            value={reservationDate}
-            onChange={(e) => setReservationDate(e.target.value)}
-            className="mr-2 px-2 py-1 border rounded input"
-          />
-          <button onClick={handleFilterByDate} className="px-2 py-1 bg-green-500 text-white rounded mr-2">
-            Filtrer par date
-          </button>
-          <button onClick={handleResetFilters} className="px-2 py-1 bg-gray-500 text-white rounded">
-            Réinitialiser les filtres
-          </button>
+      <div>
+      <div className="container mx-auto px-6 py-8 ml-70" style={{ width:'77%',marginLeft:'280px' }}>
+        <div className="bg-white shadow-md rounded-md p-6 mb-8">
+          <h1 className="text-3xl font-bold mb-6">Liste des réservations</h1>
+          <div className="flex justify-between items-center mb-4">
+            <button
+              onClick={toggleShowCancelled}
+              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md shadow-md transition duration-300 ease-in-out flex items-center justify-center space-x-2"
+            >
+              <FaSearchPlus className="text-xl animate-bounce" />
+              <span>{showCancelled ? 'Afficher toutes les réservations' : 'Afficher les réservations annulées'}</span>
+            </button>
+            <div className="flex space-x-4">
+              <div className="flex items-center">
+                <FaIdCard className="text-gray-500 mr-2" />
+                <input
+                  type="text"
+                  placeholder="Filtrer par CIN du client"
+                  value={clientCin}
+                  onChange={(e) => setClientCin(e.target.value)}
+                  className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <button
+                onClick={handleFilterByCin}
+                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-black rounded-md shadow-md transition duration-300 ease-in-out"
+              >
+                Filtrer par CIN
+              </button>
+             
+              </div>
+              <div className="flex items-center">
+                <FaIdCard className="text-gray-500 mr-2" />
+                <input
+                  type="date"
+                  placeholder="Filtrer par date de réservation"
+                  value={reservationDate}
+                  onChange={(e) => setReservationDate(e.target.value)}
+                  className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                />
+              </div>
+              <button
+                onClick={handleFilterByDate}
+                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-black rounded-md shadow-md transition duration-300 ease-in-out"
+              >
+                Filtrer par date
+              </button>
+            </div>
+            <button
+              onClick={handleResetFilters}
+              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md shadow-md transition duration-300 ease-in-out"
+            >
+              Réinitialiser les filtres
+            </button>
+          </div>
         </div>
-        <div className="table-container overflow-x-auto">
+        <div className="table-container bg-white shadow-md rounded-md overflow-x-auto ml-80">
           <table className="table-auto min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
@@ -177,8 +219,9 @@ const Index = ({ reservations }) => {
                       <FaTrashAlt className="mr-1" />
                     </button>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <Link href={route('reservation.edit', reservation.id)} className="ml-6 text-red-600 hover:text-red-900">
+                  <td className="px-6 py-2 whitespace-nowrap" >
+                    <Link href={route('reservation.edit', reservation.id)}
+                     className="ml-6 text-red-600 hover:text-red-900">
                       <FaEdit className="mr-1" />
                     </Link>
                   </td>
@@ -187,17 +230,10 @@ const Index = ({ reservations }) => {
             </tbody>
           </table>
         </div>
-        {selectedClient && (
-          <div className="client-info-tooltip">
-            <p><img className='img' src="images/client.png" alt="Client" /></p>
-            <p><strong>Nom:</strong> {selectedClient.name}</p>
-            <p><strong>CIN:</strong> {selectedClient.cin}</p>
-            <p><strong>Numéro de téléphone:</strong> {selectedClient.numero_telephone}</p>
-            <p><strong>Nationalité:</strong> {selectedClient.nationalite}</p>
-          </div>
-        )}
+        
       </div>
     </div>
+  
   );
 };
 

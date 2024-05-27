@@ -50,7 +50,7 @@ body {
   }
   
   .image-container .text {
-    max-width: 80%;
+    max-width: 83%;
   }
   
   .image-container .text h2 {
@@ -76,8 +76,8 @@ body {
   /* Card Styles */
   .card {
     position: relative;
-    width: 300px;
-    height: 200px;
+    width: 340px;
+    height: 240px;
     background-color: #f2f2f2;
     border-radius: 10px;
     overflow: hidden;

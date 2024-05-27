@@ -5,6 +5,7 @@ import TextInput from '@/Components/TextInput';
 import Swal from 'sweetalert2';
 import { Inertia } from '@inertiajs/inertia';
 import { FaUserShield, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import Layout from '@/Pages/MyPages/Liens';
 
 const EditChambre = ({ chambre }) => {
     const { data, setData, put, processing, errors } = useForm({
@@ -74,6 +75,7 @@ const EditChambre = ({ chambre }) => {
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100">
+            <Layout/>
             <div className="bg-white p-8 rounded shadow-md w-full max-w-2xl">
                 <div className="flex items-center mb-6">
                     <FaUserShield size={24} className="mr-2 text-blue-500" />

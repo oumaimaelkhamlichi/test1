@@ -6,9 +6,14 @@ import Navbar from '@/Layouts/Navbar';
 import './Styleclient.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Footer from '@/Layouts/footer';
+import Footer from './Footer';
+import zIndex from '@mui/material/styles/zIndex';
 
 export default function AfficherChambres({ typechambres }) {
+  const [darkMode, setDarkMode] = useState(false);
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
   const [translations, setTranslations] = useState({});
   const [language, setLanguage] = useState('en');
   const [filteredTypeChambres, setFilteredTypeChambres] = useState([]);
@@ -20,6 +25,8 @@ export default function AfficherChambres({ typechambres }) {
   });
   const [backgroundImages, setBackgroundImages] = useState([
     '/image/91a703a8d1332039ea9eda1a2f370b77.jpg',
+    // 'image/pexel1.jpg',
+
   ]);
   const [currentBackgroundIndex, setCurrentBackgroundIndex] = useState(0);
 
@@ -71,6 +78,7 @@ export default function AfficherChambres({ typechambres }) {
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
   };
+ 
 
   const {
     welcome = 'Welcome to Cozy Suites',
@@ -106,13 +114,16 @@ export default function AfficherChambres({ typechambres }) {
 
   return (
     
-      <div className=" container">
+      <div  className={`container ${darkMode ? 'dark-mode' : ''}`}>
       <Navbar 
       className='w-40 '
         language={language}
         handleLanguageChange={handleLanguageChange}
         translations={translations}
       />
+         <button className='but1' onClick={toggleDarkMode} >
+        {darkMode ? 'Light Mode' : 'Dark Mode'}
+      </button>
 
       <div className="header-content">
         <h1>{welcome}</h1>
